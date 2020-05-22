@@ -98,7 +98,6 @@ def run(thread_id):
         phone = charge_info['phone']
         face = charge_info['face']
         resp = charge(phone, int(face))
-        print(resp)
         log.info("线程{}获取{},执行结果{}".format(thread_id, charge_info, resp))
         check_enable(resp)
 
