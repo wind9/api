@@ -1,1 +1,0 @@
-from .config import global_config as config

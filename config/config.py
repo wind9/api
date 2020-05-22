@@ -1,11 +1,13 @@
 import configparser
 import os
+import time
+from redis import StrictRedis, ConnectionPool
 
 
 class Config(object):
 
     def __init__(self, config_file='config.ini'):
-        self._path = os.path.join(os.path.dirname(os.getcwd()), 'config.ini')
+        self._path = os.path.join(os.path.dirname(__file__), 'config.ini')
         if not os.path.exists(self._path):
             raise FileNotFoundError("can not find file config.ini")
         self._config = configparser.ConfigParser()
