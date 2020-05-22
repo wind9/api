@@ -2,7 +2,7 @@ import hashlib
 import logging
 import os
 import json
-from config.config import global_config as config
+from config import global_config as config
 from redis import StrictRedis, ConnectionPool
 
 

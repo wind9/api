@@ -2,7 +2,7 @@ import requests
 import pymysql
 import time
 import traceback
-from config.config import global_config as config
+from config import global_config as config
 import tools
 import random
 import json
