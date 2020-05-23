@@ -2,7 +2,7 @@ import hashlib
 import logging
 import os
 import json
-from config.config import global_config as config
+from config import global_config as config
 from redis import StrictRedis, ConnectionPool
 
 
@@ -35,8 +35,8 @@ def get_redis(db_name):
     return redis
 
 
-def init_orders(order_file):
-    redis = get_redis('xiantian')
+def init_orders(api_name, order_file):
+    redis = get_redis(api_name)
     with open(order_file, 'r') as f:
         for line in f.readlines():
             line = line.strip().split()
@@ -49,4 +49,5 @@ def init_orders(order_file):
 if __name__ == '__main__':
     order_file_dir = os.path.join(os.path.dirname(), 'phones.txt')
     order_file = os.path.join(os.path.dirname(), 'phones.txt')
-    init_orders(order_file)
+    api_name = os.environ.get('api')
+    init_orders(api_name, order_file)

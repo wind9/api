@@ -2,24 +2,24 @@ import requests
 import pymysql
 import time
 import traceback
-from config.config import global_config as config
+from config import global_config as config
 import tools
 import random
 import json
 from threading import Thread
 
-charge_url = config.get('xiantian', 'charge_url')
-PlatID = config.get('xiantian', 'PlatID')
-API_KEY = config.get('xiantian', 'API_KEY')
-db_host = config.get('xiantian', 'db_host')
-db_host = config.get('xiantian', 'db_host')
-db_port = int(config.get('xiantian', 'db_port'))
-db_user = config.get('xiantian', 'db_user')
-db_password = config.get('xiantian', 'db_password')
-db_name = config.get('xiantian', 'db_name')
-thread_num = int(config.get('xiantian', 'thread_num'))
-log = tools.logger('xiantian')
-redis = tools.get_redis('xiantian')
+charge_url = config.get('xt', 'charge_url')
+PlatID = config.get('xt', 'PlatID')
+API_KEY = config.get('xt', 'API_KEY')
+db_host = config.get('xt', 'db_host')
+db_host = config.get('xt', 'db_host')
+db_port = int(config.get('xt', 'db_port'))
+db_user = config.get('xt', 'db_user')
+db_password = config.get('xt', 'db_password')
+db_name = config.get('xt', 'db_name')
+thread_num = int(config.get('xt', 'thread_num'))
+log = tools.logger('xt')
+redis = tools.get_redis('xt')
 
 
 def pre_charge(phone, face):
@@ -87,7 +87,7 @@ def check_enable(resp):
         fail_count = int(redis.get('fail_count'))
         redis.set('fail_count', fail_count+1)
         log.info("第{}次提交失败".format(fail_count+1))
-        if fail_count + 1 > int(config.get('xiantian', 'max_fail')):
+        if fail_count + 1 > int(config.get('xt', 'max_fail')):
             log.info("第{}次提交失败,已达最大失败次数,充值暂停".format(fail_count+1))
             redis.set('enable', 0)
 
