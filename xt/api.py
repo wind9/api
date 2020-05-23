@@ -25,7 +25,7 @@ redis = tools.get_redis('xt')
 def pre_charge(phone, face):
     flag = False
     try:
-        con = pymysql.Connect(host=db_host,port=db_port,user=db_user,passwd=db_password,db=db_name)
+        con = pymysql.Connect(host=db_host, port=db_port, user=db_user, passwd=db_password, db=db_name)
         cursor = con.cursor()
         month = time.strftime('%Y%m')[2:]
         time_str = time.strftime('%Y%m%d%H%M%S')
@@ -100,6 +100,7 @@ def run(thread_id):
         resp = charge(phone, int(face))
         log.info("线程{}获取{},执行结果{}".format(thread_id, charge_info, resp))
         check_enable(resp)
+    log.info("取单暂停")
 
 
 def main():

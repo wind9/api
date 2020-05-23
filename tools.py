@@ -47,7 +47,7 @@ def init_orders(api_name, order_file):
 
 
 if __name__ == '__main__':
-    order_file_dir = os.path.join(os.path.dirname(), 'phones.txt')
-    order_file = os.path.join(os.path.dirname(), 'phones.txt')
+    order_file_dir = os.path.join(os.path.dirname(__file__), 'phones.txt')
+    order_file = os.path.join(os.path.dirname(__file__), 'phones.txt')
     api_name = os.environ.get('api')
     init_orders(api_name, order_file)
