@@ -103,7 +103,7 @@ def run(thread_id):
         check_enable(resp)
 
 
-if __name__ == '__main__':
+def main():
     redis.set('enable', 1)
     redis.set('fail_count', 0)
     thread_list = []
@@ -113,3 +113,7 @@ if __name__ == '__main__':
         thread_list.append(t)
     for t in thread_list:
         t.join()
+
+
+if __name__ == '__main__':
+    main()
