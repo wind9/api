@@ -35,13 +35,14 @@ def pre_charge(phone, face):
         cursor.close()
         con.close()
         flag = True
-    except Exception as e:
+    except Exception:
         log.info(traceback.format_exc())
     finally:
         return flag
 
 
 def charge(phone, face):
+    resp = ''
     params = {
         "PlatID": PlatID,
         "NodeOrderID": "a{}{}".format(int(time.time()*1000), random.randint(0, 100)),
@@ -58,18 +59,18 @@ def charge(phone, face):
     sign = tools.md5(value_str + API_KEY)
     params['Sign'] = sign.upper()
     try:
-        resp = ''
         if pre_charge(phone, face):
             log.info("号码{}面值{}已插入数据库".format(phone, face))
             r = requests.post(charge_url, data=params)
             resp = r.text
     except Exception:
         log.info(traceback.format_exc())
-    return resp
+    finally:
+        return resp
 
 
 def result_parse(resp):
-    success = True
+    success = False
     try:
         result = json.loads(resp)
         success = result['success']
@@ -80,7 +81,7 @@ def result_parse(resp):
 
 
 def check_enable(resp):
-    if result_parse(resp):
+    if resp and result_parse(resp):
         redis.set('enable', 1)
         redis.set('fail_count', 0)
     else:
@@ -108,11 +109,12 @@ def main():
     redis.set('enable', 1)
     redis.set('fail_count', 0)
     thread_list = []
-    for i in range(thread_num):
-        t = Thread(target=run, args=(i,))
-        t.start()
+    for thread_id in range(thread_num):
+        t = Thread(target=run, args=(thread_id,))
         thread_list.append(t)
     for t in thread_list:
+        t.setDaemon(True)
+        t.start()
         t.join()
 
 
