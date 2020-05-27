@@ -48,7 +48,7 @@ def result_parse(resp):
     success = False
     try:
         result = json.loads(resp)
-        if result['status'] == 0:
+        if result['status'] in (0, 2):
             success = True
     except Exception as e:
         log.info(traceback.format_exc())
