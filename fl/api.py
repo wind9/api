@@ -16,6 +16,7 @@ tradePwd = config.get('fl', 'tradePwd')
 charge_url = config.get('fl', 'charge_url')
 appKey = config.get('fl', 'appKey')
 thread_num = int(config.get('fl', 'thread_num'))
+sleep_time = int(config.get('fl', 'sleep_time'))
 redis = tools.get_redis('fl')
 
 
@@ -76,6 +77,8 @@ def run(thread_id):
         resp = charge(phone, face)
         log.info("线程{}获取{},执行结果{}".format(thread_id, charge_info, resp))
         check_enable(resp)
+        if sleep_time:
+            time.sleep(sleep_time)
     log.info("取单暂停")
 
 
