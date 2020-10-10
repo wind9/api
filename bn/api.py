@@ -64,7 +64,7 @@ def check_enable(resp):
         fail_count = int(redis.get('fail_count'))
         redis.set('fail_count', fail_count+1)
         log.info("第{}次提交失败".format(fail_count+1))
-        if fail_count + 1 > int(config.get('xt', 'max_fail')):
+        if fail_count + 1 > int(config.get('bn', 'max_fail')):
             log.info("第{}次提交失败,已达最大失败次数,充值暂停".format(fail_count+1))
             redis.set('enable', 0)
 

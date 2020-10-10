@@ -9,15 +9,15 @@ from threading import Thread
 from config import global_config as config
 
 
-log = tools.logger('fl')
-agentId = config.get('fl', 'agentId')
-businessId = config.get('fl', 'businessId')
-tradePwd = config.get('fl', 'tradePwd')
-charge_url = config.get('fl', 'charge_url')
-appKey = config.get('fl', 'appKey')
-thread_num = int(config.get('fl', 'thread_num'))
-sleep_time = int(config.get('fl', 'sleep_time'))
-redis = tools.get_redis('fl')
+log = tools.logger('bx')
+agentId = config.get('bx', 'agentId')
+businessId = config.get('bx', 'businessId')
+tradePwd = config.get('bx', 'tradePwd')
+charge_url = config.get('bx', 'charge_url')
+appKey = config.get('bx', 'appKey')
+thread_num = int(config.get('bx', 'thread_num'))
+sleep_time = int(config.get('bx', 'sleep_time'))
+redis = tools.get_redis('bx')
 
 
 def charge(phone, face):
@@ -64,7 +64,7 @@ def check_enable(resp):
         fail_count = int(redis.get('fail_count'))
         redis.set('fail_count', fail_count+1)
         log.info("第{}次提交失败".format(fail_count+1))
-        if fail_count + 1 > int(config.get('fl', 'max_fail')):
+        if fail_count + 1 > int(config.get('bx', 'max_fail')):
             log.info("第{}次提交失败,已达最大失败次数,充值暂停".format(fail_count+1))
             redis.set('enable', 0)
 
